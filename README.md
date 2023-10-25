@@ -1,1 +1,1 @@
-# SynopticMapPredict
+# SynopticMapPrediction
