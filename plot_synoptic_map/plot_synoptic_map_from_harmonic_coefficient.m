@@ -1,5 +1,6 @@
 clear; close all;
 save_or_not = 0;
+mode = 1; % 0-GONG, 1-WSO, 2-predict
 %% colorbar red-white-blue
 color_red   = [1,0,0];
 color_white = [1,1,1];
@@ -11,17 +12,23 @@ G_comp = [linspace(color_red(2),color_white(2),n1),linspace(color_white(2),color
 B_comp = [linspace(color_red(3),color_white(3),n1),linspace(color_white(3),color_blue(3),n2)];
 red_white_blue = [R_comp',G_comp',B_comp'];
 %% import data
-% store_dir = 'E:\Research\Data\GONG\harmonics\'; % for GONG: 2047-2268
-store_dir = 'E:\Research\Data\WSO\harmonics\'; % for WSO: 1642-2258
-pred_dir = 'E:\Research\Work\magnetic_multipole\EMD+LSTM\predict\'; % for predict: 2259-2408
+if mode == 0 % for GONG: 2047-2268
+    store_dir = 'E:\Research\Data\GONG\harmonics\';
+elseif mode == 1 % for WSO: 1642-2272
+    store_dir = 'E:\Research\Data\WSO\harmonics\';
+elseif mode == 2 % for predict: 2259-2408
+    store_dir = 'E:\Research\Work\magnetic_multipole\predict\harmonics\';
+end
 % save_dir = 'E:\Research\Work\magnetic_multipole\std_harmonics\'; % for test
 save_dir = 'E:\Research\Work\magnetic_multipole\harmonics_map\';
-for cr = 2258 : 2258
+for cr = 2261 : 2261
     close all;
-%     file_name = ['mrmqc_c',num2str(cr),'.dat']; % for GONG
-    file_name = ['cr',num2str(cr),'.dat']; % for WSO
+    if mode == 0 % for GONG
+        file_name = ['mrmqc_c',num2str(cr),'.dat'];
+    else % for WSO
+        file_name = ['cr',num2str(cr),'.dat'];
+    end
     data_dir = [store_dir,file_name];
-%     data_dir = [pred_dir,file_name];
     data = load(data_dir);
     g = data(:,3);% coeff of cos
     h = data(:,4);% coeff of sin
@@ -57,28 +64,42 @@ for cr = 2258 : 2258
             end
         end
     end
+    if mode ~= 0
+        magneto = magneto / 100; % [G]
+    end
     %% plot magnetogram in plane
     figure();
     LineWidth = 2;
     FontSize = 15;
-%     clim = max(max(abs(magneto)));
-%     clim = 150;
-    clim = inf;
+    clim = max(max(abs(magneto)));
+%     clim = 300;
+%     clim = inf;
 
     hp = pcolor(lon,lat,magneto);
     set(hp,'LineStyle','none');
-    colorbar;
+    cb = colorbar;
+    cb.Title.String = '[G]';
     colormap(red_white_blue);
     axis equal
     xlim([0 360]);
     ylim([-90 90]);
+    xticks([0 90 180 270 360]);
+    xticklabels({'0^\circ','90^\circ','180^\circ','270^\circ','360^\circ'})
+    yticks([-90 -45 0 45 90]);
+    yticklabels({'-90^\circ','-45^\circ','0^\circ','45^\circ','90^\circ'})
     set(gca,'Clim',[-clim,clim],'TickDir','out','XminorTick','on','YminorTick','on','LineWidth',LineWidth,'FontSize',FontSize);
 
-    % save_name = ['l=',num2str(l_lst),',m=',num2str(m_lst)]; % for test
-    save_name = ['GONG_map_harmonics_',num2str(cr)]; % for GONG
-%     save_name = ['WSO_map_harmonics_',num2str(cr)]; % for WSO
-    % title(save_name,'FontSize',FontSize);
+%     title(save_name,'FontSize',FontSize);
 %     title(['CR ',num2str(cr)]);
+
+    % save_name = ['l=',num2str(l_lst),',m=',num2str(m_lst)]; % for test
+    if mode == 0 % for GONG
+        save_name = ['GONG_map_harmonics_',num2str(cr)];
+    elseif mode == 1% for WSO
+        save_name = ['WSO_map_harmonics_',num2str(cr)];
+    elseif mode == 2 % for predict
+        save_name = ['WSO_pred_harmonics_',num2str(cr)];
+    end
     if save_or_not == 1
         %     saveas(gca,[save_dir,'plane\',save_name,'_plane.png']); % for test
         saveas(gca,[save_dir,save_name,'.png']); % for GONG and WSO

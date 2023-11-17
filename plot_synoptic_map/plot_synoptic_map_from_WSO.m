@@ -3,14 +3,15 @@ save_or_not = 0;
 %% work dir
 WSO_dir = 'E:\Research\Data\WSO\field\';
 save_dir = 'E:\Research\Work\magnetic_multipole\WSO_map\';
-cr_beg = 2258;
-cr_end = 2258;
+cr_beg = 2239;
+cr_end = 2239;
 for i_cr = cr_beg : cr_end
     close all;
     %% import data
     file_name = ['cr',num2str(i_cr),'.dat'];
     file_dir = [WSO_dir,file_name];
     Br = importdata(file_dir); % [uT]
+    Br = Br/100; % [G]
     lon_dir = [WSO_dir,'lon_arr.dat'];
     lon = importdata(lon_dir); % [deg.]
     lat_dir = [WSO_dir,'lat_arr.dat'];
@@ -34,6 +35,7 @@ for i_cr = cr_beg : cr_end
     set(h,'LineStyle','none');
     shading interp
     cb = colorbar;
+    cb.Title.String = '[G]';
     colormap(red_white_blue);
 %     hold on
 %     xline(90,'k','LineWidth',LineWidth);
@@ -42,6 +44,10 @@ for i_cr = cr_beg : cr_end
     axis equal
     xlim([0 360]);
     ylim([-90 90]);
+    xticks([0 90 180 270 360]);
+    xticklabels({'0^\circ','90^\circ','180^\circ','270^\circ','360^\circ'})
+    yticks([-90 -45 0 45 90]);
+    yticklabels({'-90^\circ','-45^\circ','0^\circ','45^\circ','90^\circ'})
     clim = max(max(abs(Br)));
     set(gca,'CLim',[-clim clim],'TickDir','out','XminorTick','on','YminorTick','on','LineWidth',LineWidth,'FontSize',FontSize);
 
