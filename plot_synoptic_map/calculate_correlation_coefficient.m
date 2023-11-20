@@ -37,6 +37,23 @@ axis equal
 xlim([-4,4])
 ylim([-4,4])
 xlabel('Observation [G]')
+
 ylabel('Prediction [G]')
 title(['CR',num2str(cr),',k=',num2str(p(1)),',b=',num2str(p(2)),',CC=',num2str(cc(1,2))]);
 set(gca,'LineWidth',2,'FontSize',15)
+%% illustrate cycle-like scatters
+test1 = cos(std_llon/60).*cos(std_llat/60);
+test2 = 0.6*cos(std_llon/60-0.5).*cos(std_llat/60);
+figure()
+subplot(2,2,1)
+p1 = pcolor(test1);
+colorbar
+set(p1,'LineStyle','none')
+subplot(2,2,2)
+p2 = pcolor(test2);
+colorbar
+set(p2,'LineStyle','none')
+subplot(2,2,3)
+test1 = reshape(test1,1,[]);
+test2 = reshape(test2,1,[]);
+scatter(test1,test2,3)
