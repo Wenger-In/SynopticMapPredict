@@ -5,16 +5,17 @@ from astropy.io import fits
 
 path = 'E:/Research/Program/SynopticMapPrediction/postprocess_on_class/'
 
-# example GONG fits: flipud to get synoptic maps
-gong_file = path + 'mrzqs_c2048.fits'
-gong_fits = fits.open(gong_file)
+# raw GONG fits: flipud to get synoptic maps
+raw_file = path + 'raw/' + 'mrzqs_c2048.fits'
+# gong_file = path + 'neaten/' + 'neaten_cr2259.fits'
+raw_fits = fits.open(raw_file)
 
-gong_Br = gong_fits[0].data
-header = gong_fits[0].header
-print(header)
+raw_Br = raw_fits[0].data
+raw_header = raw_fits[0].header
+print(raw_header)
 
 plt.figure()
-plt.imshow(gong_Br,cmap='RdBu',vmin=-50,vmax=50)
+plt.imshow(raw_Br,cmap='RdBu',vmin=-50,vmax=50)
 plt.colorbar()
 
 # predicted WSO mat: flipud to get synoptic maps
@@ -24,7 +25,7 @@ pred_Br = pred_mat['pred_Br_interp']
 
 plt.figure()
 plt.imshow(pred_Br,cmap='RdBu',vmin=-4,vmax=4)
-plt.colorbar
+plt.colorbar()
 
 # replace original GONG data with predicted data
 gong_fits[0].data = pred_Br
@@ -36,4 +37,4 @@ plt.colorbar()
 
 plt.show()
 
-gong_fits.writeto(path + 'neaten_cr2259.fits')
+# gong_fits.writeto(path + 'neaten_cr2259.fits')
