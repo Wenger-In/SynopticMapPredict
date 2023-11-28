@@ -1,8 +1,8 @@
 clear; close all;
 save_or_not = 0;
-mode = 1; % 0-GONG, 1-WSO, 2-predict
-cr_beg= 2253;
-cr_end= 2253;
+mode = 2; % 0-GONG, 1-WSO, 2-predict
+cr_beg= 2259;
+cr_end= 2259;
 %% colorbar red-white-blue
 color_red   = [1,0,0];
 color_white = [1,1,1];
@@ -105,6 +105,7 @@ for cr = cr_beg : cr_end
     if save_or_not == 1
         %     saveas(gca,[save_dir,'plane\',save_name,'_plane.png']); % for test
         saveas(gca,[save_dir,save_name,'.png']); % for GONG and WSO
+%         save(['E:\Research\Work\magnetic_multipole\predict\cr',num2str(cr),'_pred.mat'],'magneto')
     end
 end
 %% plot magnetogram in sphere
