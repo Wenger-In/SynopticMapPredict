@@ -1,6 +1,8 @@
 clear; close all;
 save_or_not = 0;
 mode = 1; % 0-GONG, 1-WSO, 2-predict
+cr_beg= 2253;
+cr_end= 2253;
 %% colorbar red-white-blue
 color_red   = [1,0,0];
 color_white = [1,1,1];
@@ -21,7 +23,7 @@ elseif mode == 2 % for predict: 2259-2408
 end
 % save_dir = 'E:\Research\Work\magnetic_multipole\std_harmonics\'; % for test
 save_dir = 'E:\Research\Work\magnetic_multipole\harmonics_map\';
-for cr = 2261 : 2261
+for cr = cr_beg : cr_end
     close all;
     if mode == 0 % for GONG
         file_name = ['mrmqc_c',num2str(cr),'.dat'];
