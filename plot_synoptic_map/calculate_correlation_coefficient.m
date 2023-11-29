@@ -1,8 +1,8 @@
 clear; close all;
-cr = 2259;
+cr = 2261;
 %% import data
 obs_dir = 'E:\Research\Work\magnetic_multipole\harmonics_map\WSO\';
-obs_file = [obs_dir,'cr',num2str(cr),'.mat'];
+obs_file = [obs_dir,'cr',num2str(cr),'_obs.mat'];
 obs_data = load(obs_file);
 magneto_obs = obs_data.magneto;
 
@@ -53,7 +53,9 @@ p0 = pcolor(binxx,binyy,gridcounts);
 set(p0,'LineStyle','none')
 hold on;
 plot(binx,biny,'w','LineWidth',2);
-colormap('jet'); colorbar
+colormap('jet');
+cb = colorbar;
+cb.Label.String = 'count';
 axis equal
 xlim([-4,4])
 ylim([-4,4])
