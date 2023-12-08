@@ -12,6 +12,7 @@ import sunpy.map
 import pfsspy
 from pfsspy import coords
 from pfsspy import tracing
+import pandas as pd
 
 ###############################################################################
 # Fuctions
@@ -21,8 +22,8 @@ def set_axes_lims(ax):
     return 0
 ###############################################################################
 # Step 1: import magnetogram
-
 gong_fname = 'E:/Research/Program/SynopticMapPrediction/postprocess_on_class/neaten/cr2253_neaten.fits'
+# gong_fname = 'E:/Research/Data/GONG/fits/mrzqs_c2253.fits'
 
 gong_map = sunpy.map.Map(gong_fname)
 # Remove the mean, sothat curl B = 0; set colorbar to be symlog
@@ -52,6 +53,7 @@ ax = plt.subplot(projection=m)
 m.plot()
 # Plot formatting
 plt.colorbar()
+plt.legend(loc='upper right', frameon=True)
 ax.set_title('Input magnetogram field')
 set_axes_lims(ax)
 ###############################################################################
@@ -62,17 +64,25 @@ fig = plt.figure()
 ax = plt.subplot(projection=ss_br, label='Neutral Line')
 # Plot the source surface map
 ss_br.plot()
-
+plt.colorbar(orientation='horizontal')
 # Plot the polarity inversion line
 ax.plot_coord(output.source_surface_pils[0])
-# Plot Earth trace ######################################## should be added
+# Plot Earth trace
+file_path = 'E:/Research/Program/SynopticMapPrediction/postprocess_on_class/earth_location/OMNI_data_2022_to_ss.xlsx'
+df = pd.read_excel(file_path)
 
+doy_beg = 34
+doy_end = 60
+filtered_rows_zero = df[df.iloc[:, 2] == 0]
+filtered_rows_interval = filtered_rows_zero[(filtered_rows_zero.iloc[:, 1] >= doy_beg) & (filtered_rows_zero.iloc[:, 1] <= doy_end)]
+lon_cr = filtered_rows_interval.iloc[:, 17].tolist()
+lat_cr = [lat + 90 for lat in filtered_rows_interval.iloc[:, 18].tolist()]
+polarity = filtered_rows_interval.iloc[:, 19].tolist()
+colors = ['black' if p == 1 else 'green' for p in polarity]
+plt.scatter(lon_cr, lat_cr, c=colors)
 # Plot formatting
-plt.colorbar(orientation='horizontal')
 ax.set_title('Magnetic field on source surface @ 2.5 Rs')
 set_axes_lims(ax)
-
-plt.legend(loc='upper right', frameon=True)
 
 plt.show()
 ###############################################################################
