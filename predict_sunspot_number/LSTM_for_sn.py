@@ -170,7 +170,7 @@ for epoch in range(num_epochs):
     else:
         counter += 1
         if (counter >= patience) & (val_loss_np < val_loss_thres) & (loss.item() < 0.003):
-            print('Early stopping at Epoch [{}/{}], Train Loss: {:.5f}, Val Loss={:.5f}'.format(epoch+1, num_epochs, loss.item(), val_loss_np))
+            print('Early stopping at Epoch [{}/{}], Train Loss: {:.5f}, Val Loss: {:.5f}'.format(epoch+1, num_epochs, loss.item(), val_loss_np))
             break
 print('Time Cost(s):', time.time()-start_time)
         
