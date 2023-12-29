@@ -21,8 +21,8 @@ for cr in range(2253,2254):
     plt.imshow(raw_Br,cmap='RdBu',vmin=-4,vmax=4)
     plt.colorbar()
     
-    plt.show()
-    # plt.close()
+    # plt.show()
+    plt.close()
 
     # predicted WSO mat: flipud to get synoptic maps
     pred_file = path + 'interp/' + 'cr' + str(cr) + '_interp.mat'
@@ -71,6 +71,6 @@ for cr in range(2253,2254):
     # neaten_fits[0].header['FILELIST'] = 'mrzql240529t2316c2284_000'
     
     # save .fits
-    # save_file = path + 'neaten/' + 'cr' + str(cr) + '_neaten.fits'
-    save_file = path + 'neaten/' + neaten_fits[0].header['FILELIST'] + '.fits'
+    save_file = path + 'neaten/' + 'cr' + str(cr) + '_neaten.fits'
+    # save_file = path + 'neaten/' + neaten_fits[0].header['FILELIST'] + '.fits'
     # neaten_fits.writeto(save_file,overwrite=True)

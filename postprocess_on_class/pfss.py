@@ -22,8 +22,8 @@ def set_axes_lims(ax):
     return 0
 ###############################################################################
 # Step 1: import magnetogram
-gong_fname = 'E:/Research/Program/SynopticMapPrediction/postprocess_on_class/neaten/cr2253_neaten.fits'
-# gong_fname = 'E:/Research/Data/GONG/fits/mrzqs_c2253.fits'
+# gong_fname = 'E:/Research/Program/SynopticMapPrediction/postprocess_on_class/neaten/cr2259_neaten.fits'
+gong_fname = 'E:/Research/Data/GONG/fits/mrzqs_c2259.fits'
 
 gong_map = sunpy.map.Map(gong_fname)
 # Remove the mean, sothat curl B = 0; set colorbar to be symlog
