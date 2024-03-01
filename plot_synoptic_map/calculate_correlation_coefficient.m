@@ -1,21 +1,30 @@
 clear; close all;
 cr = 2261;
+pred_or_pers = 1; % 0-predict model; 1-persistent model
 %% import data
 obs_dir = 'E:\Research\Work\magnetic_multipole\harmonics_map\WSO\';
 obs_file = [obs_dir,'cr',num2str(cr),'_obs.mat'];
 obs_data = load(obs_file);
 magneto_obs = obs_data.magneto;
-
-pred_dir = 'E:\Research\Work\magnetic_multipole\predict\';
-pred_file = [pred_dir,'cr',num2str(cr),'_pred.mat'];
-pred_data = load(pred_file);
-magneto_pred = pred_data.magneto;
+%% comparison
+if pred_or_pers == 0
+    pred_dir = 'E:\Research\Work\magnetic_multipole\predict\';
+    pred_file = [pred_dir,'cr',num2str(cr),'_pred.mat'];
+    pred_data = load(pred_file);
+    magneto_pred = pred_data.magneto;
+elseif pred_or_pers == 1
+    pers_file = [obs_dir,'cr2258_obs.mat'];
+    pers_data = load(pers_file);
+    magneto_pers = pers_data.magneto;
+    magneto_pred = magneto_pers;
+end
 %% interpolate into rougher grid
 raw_lon = linspace(0,360,360);
 raw_lat = linspace(-90,90,180);
 [raw_llon,raw_llat] = meshgrid(raw_lon,raw_lat);
 std_lon = linspace(0,360,73);
 std_lat = linspace(-90,90,37);
+% std_lat = linspace(-75,75,37);
 [std_llon,std_llat] = meshgrid(std_lon,std_lat);
 
 Br_obs = interp2(raw_llon,raw_llat,magneto_obs,std_llon,std_llat);
@@ -75,20 +84,20 @@ annotation('textbox',[0.6,0,0.1,0.05],'String','plotted by calculate\_correlatio
 % histogram(Br_obs,edges,'EdgeColor','r','FaceColor','none'); hold on
 % histogram(Br_pred,edges,'EdgeColor','b','FaceColor','none'); hold on
 %% illustrate cycle-like scatters
-test1 = cos(std_llon/60).*cos(std_llat/60);
-test2 = 0.6*cos(std_llon/60-0.5).*cos(std_llat/60);
-
-figure()
-subplot(2,2,1)
-p1 = pcolor(test1);
-colorbar
-set(p1,'LineStyle','none')
-subplot(2,2,2)
-p2 = pcolor(test2);
-colorbar
-set(p2,'LineStyle','none')
-subplot(2,2,3)
-test1 = reshape(test1(1,:),1,[]);
-test2 = reshape(test2(1,:),1,[]);
-scatter(test1,test2,3)
-annotation('textbox',[0.6,0,0.1,0.05],'String','plotted by calculate\_correlation\_coefficient.m','FitBoxToText','on');
+% test1 = cos(std_llon/60).*cos(std_llat/60);
+% test2 = 0.6*cos(std_llon/60-0.5).*cos(std_llat/60);
+% 
+% figure()
+% subplot(2,2,1)
+% p1 = pcolor(test1);
+% colorbar
+% set(p1,'LineStyle','none')
+% subplot(2,2,2)
+% p2 = pcolor(test2);
+% colorbar
+% set(p2,'LineStyle','none')
+% subplot(2,2,3)
+% test1 = reshape(test1(1,:),1,[]);
+% test2 = reshape(test2(1,:),1,[]);
+% scatter(test1,test2,3)
+% annotation('textbox',[0.6,0,0.1,0.05],'String','plotted by calculate\_correlation\_coefficient.m','FitBoxToText','on');

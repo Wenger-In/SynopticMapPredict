@@ -13,6 +13,7 @@ import pfsspy
 from pfsspy import coords
 from pfsspy import tracing
 import pandas as pd
+from scipy.io import savemat
 
 ###############################################################################
 # Fuctions
@@ -23,7 +24,8 @@ def set_axes_lims(ax):
 ###############################################################################
 # Step 1: import magnetogram
 # gong_fname = 'E:/Research/Program/SynopticMapPrediction/postprocess_on_class/neaten/cr2259_neaten.fits'
-gong_fname = 'E:/Research/Data/GONG/fits/mrzqs_c2259.fits'
+# gong_fname = 'E:/Research/Data/GONG/fits/mrzqs_c2239.fits'
+gong_fname = 'E:/Research/Program/SynopticMapPrediction/determine_order/2239_WSO_9.fits'
 
 gong_map = sunpy.map.Map(gong_fname)
 # Remove the mean, sothat curl B = 0; set colorbar to be symlog
@@ -59,6 +61,8 @@ set_axes_lims(ax)
 ###############################################################################
 # Step 4: plot output source surface map (Figure 2)
 ss_br = output.source_surface_br
+# Save data
+# savemat('E:/Research/Program/SynopticMapPrediction/determine_order/2239_WSO_9_pfss.mat', {'data': ss_br.data})
 # Create the figure and axes
 fig = plt.figure()
 ax = plt.subplot(projection=ss_br, label='Neutral Line')
@@ -67,19 +71,19 @@ ss_br.plot()
 plt.colorbar(orientation='horizontal')
 # Plot the polarity inversion line
 ax.plot_coord(output.source_surface_pils[0])
-# Plot Earth trace
-file_path = 'E:/Research/Program/SynopticMapPrediction/postprocess_on_class/earth_location/OMNI_data_2022_to_ss.xlsx'
-df = pd.read_excel(file_path)
+# # Plot Earth trace
+# file_path = 'E:/Research/Program/SynopticMapPrediction/postprocess_on_class/earth_location/OMNI_data_2022_to_ss.xlsx'
+# df = pd.read_excel(file_path)
 
-doy_beg = 34
-doy_end = 60
-filtered_rows_zero = df[df.iloc[:, 2] == 0]
-filtered_rows_interval = filtered_rows_zero[(filtered_rows_zero.iloc[:, 1] >= doy_beg) & (filtered_rows_zero.iloc[:, 1] <= doy_end)]
-lon_cr = filtered_rows_interval.iloc[:, 17].tolist()
-lat_cr = [lat + 90 for lat in filtered_rows_interval.iloc[:, 18].tolist()]
-polarity = filtered_rows_interval.iloc[:, 19].tolist()
-colors = ['black' if p == 1 else 'green' for p in polarity]
-plt.scatter(lon_cr, lat_cr, c=colors)
+# doy_beg = 34
+# doy_end = 60
+# filtered_rows_zero = df[df.iloc[:, 2] == 0]
+# filtered_rows_interval = filtered_rows_zero[(filtered_rows_zero.iloc[:, 1] >= doy_beg) & (filtered_rows_zero.iloc[:, 1] <= doy_end)]
+# lon_cr = filtered_rows_interval.iloc[:, 17].tolist()
+# lat_cr = [lat + 90 for lat in filtered_rows_interval.iloc[:, 18].tolist()]
+# polarity = filtered_rows_interval.iloc[:, 19].tolist()
+# colors = ['black' if p == 1 else 'green' for p in polarity]
+# plt.scatter(lon_cr, lat_cr, c=colors)
 # Plot formatting
 ax.set_title('Magnetic field on source surface @ 2.5 Rs')
 set_axes_lims(ax)

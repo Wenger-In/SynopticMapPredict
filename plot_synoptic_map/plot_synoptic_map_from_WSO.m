@@ -37,10 +37,8 @@ for i_cr = cr_beg : cr_end
     cb = colorbar;
     cb.Title.String = '[G]';
     colormap(red_white_blue);
-%     hold on
-%     xline(90,'k','LineWidth',LineWidth);
-%     hold on
-%     xline(270,'k','LineWidth',LineWidth);
+    hold on
+    yline(0,'--k','LineWidth',LineWidth);
     axis equal
     xlim([0 360]);
     ylim([-90 90]);

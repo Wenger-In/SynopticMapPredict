@@ -6,11 +6,11 @@ from scipy.stats import skew, kurtosis
 
 path = 'E:/Research/Program/SynopticMapPrediction/postprocess_on_class/'
 
-for cr in range(2253,2254):
+for cr in range(2239,2240):
     # raw GONG fits: flipud to get synoptic maps
-    # raw_file = path + 'raw/' + 'mrzqs_c'+ str(cr) + '.fits'
+    raw_file = 'E:/Research/Program/SynopticMapPrediction/determine_order/' + 'mrzqs_c'+ str(cr) + '.fits'
     # raw_file = path + 'raw/' + 'mrzqs_c2277.fits'
-    raw_file = path + 'neaten/format_as_gong/' + 'mrzql231120t0104c2277_000.fits'
+    # raw_file = path + 'neaten/format_as_gong/' + 'mrzql231120t0104c2277_000.fits'
     raw_fits = fits.open(raw_file)
 
     raw_Br = raw_fits[0].data
@@ -25,7 +25,7 @@ for cr in range(2253,2254):
     plt.close()
 
     # predicted WSO mat: flipud to get synoptic maps
-    pred_file = path + 'interp/' + 'cr' + str(cr) + '_interp.mat'
+    pred_file = 'E:/Research/Program/SynopticMapPrediction/determine_order/' + str(cr) + '_WSO_9_interp.mat'
     pred_mat = scio.loadmat(pred_file)
     pred_Br = pred_mat['pred_Br_interp']
 
@@ -42,6 +42,8 @@ for cr in range(2253,2254):
     
     # replace original header with that based on predicted data
     pred_Br_1d = pred_Br.flatten()
+    nan_indices = np.isnan(pred_Br_1d)
+    pred_Br_1d = pred_Br_1d[~nan_indices]
     # data related
     neaten_fits[0].header['IMGMN01'] = np.mean(pred_Br_1d) # mean
     neaten_fits[0].header['IMGRMS01'] = np.std(pred_Br_1d) # RMS
@@ -71,6 +73,7 @@ for cr in range(2253,2254):
     # neaten_fits[0].header['FILELIST'] = 'mrzql240529t2316c2284_000'
     
     # save .fits
-    save_file = path + 'neaten/' + 'cr' + str(cr) + '_neaten.fits'
+    save_file = 'E:/Research/Program/SynopticMapPrediction/determine_order/' + str(cr) + '_WSO_9.fits'
+    # save_file = path + 'neaten/' + 'cr' + str(cr) + '_neaten.fits'
     # save_file = path + 'neaten/' + neaten_fits[0].header['FILELIST'] + '.fits'
-    # neaten_fits.writeto(save_file,overwrite=True)
+    neaten_fits.writeto(save_file,overwrite=True)

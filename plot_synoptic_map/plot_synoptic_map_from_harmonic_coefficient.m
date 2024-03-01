@@ -1,6 +1,6 @@
 clear; close all;
 save_or_not = 0;
-mode = 2; % 0-GONG, 1-WSO, 2-predict
+mode = 1; % 0-GONG, 1-WSO, 2-predict
 cr_beg= 2259;
 cr_end= 2259;
 %% colorbar red-white-blue
@@ -42,7 +42,7 @@ for cr = cr_beg : cr_end
     ord_max = 60; % max value of spherical order
     %% select order and level
     l_lst = 0:5;
-    m_lst = -5:5;
+    m_lst = -9:9;
     %% spherical harmonic functions
     magneto = zeros(180,360);
     for i_l = 0 : ord_max % order of harmonics
@@ -82,6 +82,8 @@ for cr = cr_beg : cr_end
     cb = colorbar;
     cb.Title.String = '[G]';
     colormap(red_white_blue);
+    hold on
+    yline(0,'--k','LineWidth',LineWidth);
     axis equal
     xlim([0 360]);
     ylim([-90 90]);

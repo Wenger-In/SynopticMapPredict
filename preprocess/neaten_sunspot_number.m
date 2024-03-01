@@ -2,7 +2,7 @@ clear; close all;
 save_or_not = 0;
 %% PART 1: import data
 store_dir = 'E:\Research\Data\Sunspot\';
-spot_name = 'SN_m_tot_V2.0.csv';
+spot_name = 'SN_ms_tot_V2.0.csv';
 data_full = importdata([store_dir,spot_name]);
 frac_lst = data_full(:,3);
 sn = data_full(:,4);
@@ -52,11 +52,11 @@ set(gca,'LineWidth',LineWidth,'FontSize',FontSize);
 save_dir = 'E:\Research\Data\Sunspot\';
 save_var = [CR_lst.',CR_frac_lst,sn_interp];
 if save_or_not == 1
-    save_file = [save_dir,'sn_interp.dat'];
+    save_file = [save_dir,'sn_sm_interp.dat'];
     save(save_file,'save_var','-ascii');
     disp('Neaten Sunspot Number Successfully');
     
-    save_file = [save_dir,'sn_interp.csv'];
+    save_file = [save_dir,'sn_sm_interp.csv'];
     csvwrite(save_file,sn_interp);
 end
 %% PART 2
