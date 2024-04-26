@@ -5,11 +5,15 @@ l = 2;
 cr_beg_WSO = 1642; cr_end_WSO = 2258;
 cr_lst = cr_beg_WSO : cr_end_WSO;
 cr_num = length(cr_lst);
-cr_gap_1 = 1771; n_1 = cr_gap_1 - cr_beg_WSO;
-cr_gap_2 = 1915; n_2 = cr_gap_2 - cr_gap_1;
-cr_gap_3 = 2081; n_3 = cr_gap_3 - cr_gap_2;
-cr_gap_4 = 2222; n_4 = cr_gap_4 - cr_gap_3;
-                 n_5 = cr_end_WSO - cr_gap_4;
+cr_gap_1 = 1780; %1771
+cr_gap_2 = 1915; 
+cr_gap_3 = 2081; 
+cr_gap_4 = 2225; %2222
+n_1 = cr_gap_1 - cr_beg_WSO;
+n_2 = cr_gap_2 - cr_gap_1;
+n_3 = cr_gap_3 - cr_gap_2;
+n_4 = cr_gap_4 - cr_gap_3;                 
+n_5 = cr_end_WSO - cr_gap_4;
 full_num = max([n_1,n_2,n_3,n_4,n_5]);
 color_sc_1 = [1,0,0];
 color_sc_2 = [0,1,0];
@@ -179,31 +183,30 @@ end
 
 %% PART 3: Compare with sunspot number
 % import sunspot data
-sn_dir = 'E:\Research\Data\Sunspot\sn_interp.dat';
+sn_dir = 'E:\Research\Data\Sunspot\sn_ms_interp.dat';
 sn_data = load(sn_dir);
 sn_cr_lst = sn_data(:,1);
 sn = sn_data(:,3);
 
 % plot figure: sunspot number series
-% figure();
-% LineWidth = 2;
-% FontSize = 14;
-% sz = 100;
-% cross_0_lst = [1687,1823,1954,2128];
-% cross_0_num = length(cross_0_lst);
-% 
-% plot(sn_cr_lst,sn,'k','LineWidth',LineWidth);
-% hold on
-% scatter(sn_cr_lst,sn,sz,sn_cr_lst,'filled');
-% colormap(colormap_sc);
-% hold on
-% for i_cross = 1 : cross_0_num
-%     xline(cross_0_lst(i_cross),'k','LineWidth',LineWidth);
-% end
-% xlabel('CR');
-% ylabel('Sunspot Number');
-% set(gca,'LineWidth',LineWidth,'FontSize',FontSize);
-% subplot_xtick(-25,FontSize)
+figure();
+LineWidth = 2;
+FontSize = 14;
+sz = 100;
+cross_0_lst = [1687,1823,1954,2128];
+cross_0_num = length(cross_0_lst);
+
+plot(sn_cr_lst,sn,'k','LineWidth',LineWidth);
+hold on
+scatter(sn_cr_lst,sn,sz,sn_cr_lst,'filled');
+colormap(colormap_sc);
+hold on
+for i_cross = 1 : cross_0_num
+    xline(cross_0_lst(i_cross),'k','LineWidth',LineWidth);
+end
+ylabel('Sunspot Number');
+set(gca,'LineWidth',LineWidth,'FontSize',FontSize);
+subplot_xtick(-15,FontSize)
 
 % % plot figure: Lissajours figure
 % figure();
@@ -230,11 +233,11 @@ figure();
 LineWidth = 2;
 FontSize = 14;
 sz = 30;
-smooth_win = 365.2422/27.2753; % from Carrington Rotation Period to Year
+smooth_win = 13/12*365.2422/27.2753; % from Carrington Rotation Period to Year
 
 for i_m = 1 : 1%m_num
 %     subplot(ceil(sqrt(m_num)),ceil(sqrt(m_num)),i_m);
-    scatter(smooth(sn,smooth_win),smooth(hc_sub(:,i_m),smooth_win),sz,sn_cr_lst,'filled');
+    scatter(sn,smooth(hc_sub(:,i_m),smooth_win),sz,sn_cr_lst,'filled');
     grid on
 %     axis square
     colormap(colormap_sc);

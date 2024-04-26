@@ -12,7 +12,7 @@ import csv
 import random
 import time
 
-save_or_not = 1
+save_or_not = 0
 
 # 固定随机种子
 seed = 456
@@ -57,7 +57,7 @@ scaler = MinMaxScaler(feature_range=(0, 1))
 data = scaler.fit_transform(data)
 
 # 定义look_back
-look_back = 356
+look_back = 3
 
 # 生成训练集和测试集
 def create_dataset(dataset, look_back):

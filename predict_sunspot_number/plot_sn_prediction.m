@@ -36,8 +36,8 @@ rmse_pers_val = rmse(sn(ind_val), sn(ind_val-1));
 rmse_pers_test = rmse(sn(ind_test), sn(ind_test-1));
 %% figure: sunspot number series
 figure();
-LineWidth = 2;
-FontSize = 15;
+LineWidth = 3;
+FontSize = 30;
 
 plot(epoch(1:length(sn)),sn,'k','LineWidth',LineWidth); hold on
 plot(epoch(ind_train),train,'b','LineWidth',LineWidth); hold on
@@ -47,11 +47,11 @@ plot(epoch(length(sn)+1:length(sn)+future_step)+dev/12-6/12,future,'r','LineWidt
 % plot(epoch(length(sn)+1:length(sn)+future_step),future_ulim,':','Color','#7E2F8E','LineWidth',LineWidth); hold on
 % plot(epoch(length(sn)+1:length(sn)+future_step),future_llim,':','Color','#A2142F','LineWidth',LineWidth); 
 grid on
-legend('ISN','train prediction','val prediction','test prediction','future prediction')
+legend('ISN','train','valid','test','predict')
 xlim([epoch(1),epoch(end)+5])
 ylim([0,250])
 xlabel('Year')
-ylabel('Sunspot Number')
+ylabel('SSN')
 set(gca,'LineWidth',LineWidth/2,'FontSize',FontSize)
 %% functions
 function rmse = rmse(observation, prediction)

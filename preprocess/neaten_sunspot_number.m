@@ -52,11 +52,11 @@ set(gca,'LineWidth',LineWidth,'FontSize',FontSize);
 save_dir = 'E:\Research\Data\Sunspot\';
 save_var = [CR_lst.',CR_frac_lst,sn_interp];
 if save_or_not == 1
-    save_file = [save_dir,'sn_sm_interp.dat'];
+    save_file = [save_dir,'sn_ms_interp.dat'];
     save(save_file,'save_var','-ascii');
     disp('Neaten Sunspot Number Successfully');
     
-    save_file = [save_dir,'sn_sm_interp.csv'];
+    save_file = [save_dir,'sn_ms_interp.csv'];
     csvwrite(save_file,sn_interp);
 end
 %% PART 2
