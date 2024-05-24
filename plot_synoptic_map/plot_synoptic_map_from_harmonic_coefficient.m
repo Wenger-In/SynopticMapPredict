@@ -1,8 +1,8 @@
 clear; close all;
 save_or_not = 0;
 mode = 1; % 0-GONG, 1-WSO, 2-predict
-cr_beg= 2259;
-cr_end= 2259;
+cr_beg= 2261;
+cr_end= 2261;
 %% colorbar red-white-blue
 color_red   = [1,0,0];
 color_white = [1,1,1];
@@ -19,7 +19,7 @@ if mode == 0 % for GONG: 2047-2268
 elseif mode == 1 % for WSO: 1642-2272
     store_dir = 'E:\Research\Data\WSO\harmonics\';
 elseif mode == 2 % for predict: 2259-2408
-    store_dir = 'E:\Research\Work\magnetic_multipole\predict\harmonics\';
+    store_dir = 'E:\Research\Work\magnetic_multipole\predict_SC25\harmonics\';
 end
 % save_dir = 'E:\Research\Work\magnetic_multipole\std_harmonics\'; % for test
 save_dir = 'E:\Research\Work\magnetic_multipole\harmonics_map\';
@@ -42,7 +42,7 @@ for cr = cr_beg : cr_end
     ord_max = 60; % max value of spherical order
     %% select order and level
     l_lst = 0:5;
-    m_lst = -9:9;
+    m_lst = -5:5;
     %% spherical harmonic functions
     magneto = zeros(180,360);
     for i_l = 0 : ord_max % order of harmonics
@@ -83,7 +83,7 @@ for cr = cr_beg : cr_end
     cb.Title.String = '[G]';
     colormap(red_white_blue);
     hold on
-    yline(0,'--k','LineWidth',LineWidth);
+%     yline(0,'--k','LineWidth',LineWidth);
     axis equal
     xlim([0 360]);
     ylim([-90 90]);

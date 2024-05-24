@@ -239,7 +239,7 @@ for i_m = 1 : 1%m_num
 %     subplot(ceil(sqrt(m_num)),ceil(sqrt(m_num)),i_m);
     scatter(sn,smooth(hc_sub(:,i_m),smooth_win),sz,sn_cr_lst,'filled');
     grid on
-%     axis square
+    axis square
     colormap(colormap_sc);
     colorbar off;
 %     hold on

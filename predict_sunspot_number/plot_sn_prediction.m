@@ -1,6 +1,6 @@
 clear; close all;
 
-dev = 0;
+dev = -132;
 data_dir = ['E:\Research\Work\magnetic_multipole\sunspot\smooth_prediction\', num2str(dev), '\'];
 train = importdata([data_dir,'train_predict.csv']);
 val = importdata([data_dir,'val_predict.csv']);

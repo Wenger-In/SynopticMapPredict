@@ -12,7 +12,7 @@ import csv
 import random
 import time
 
-save_or_not = 1
+save_or_not = 0
 # lm = 1 # g30(9), g31(10), g3-3(15), g41(17), g5-2(29), g53(30), g5-3(31)
 look_back_mat = [60, 126, 50, 50,\
                  25, 97, 150, 120, \
@@ -75,6 +75,10 @@ for lm in range(1,2):
         # data_lm[i] = data_mat[i][2]
         # data_lm[i] = data_mat[i]
     data = data_lm.flatten()
+    dev = 141 # CR 2258 begins 2022:05:28, CR 2117 begins 2011:11:16
+    data_raw = data
+    data0_t = data0_t[:-dev]
+    data = data[:-dev]
     # data = moving_average(data, 12)
 
     # 整个程序的运行计时
@@ -307,12 +311,13 @@ for lm in range(1,2):
             plt.plot(future_t+len(data0_t)+cr_base,future_predict, label='future predict',color='r')
             
             if save_or_not == 1:
-                save_dir = 'E:/Research/Work/magnetic_multipole/predict/model_output/' 
-                np.savetxt(save_dir+str(i)+'_imf.csv',IMFs[i],delimiter=',')
-                np.savetxt(save_dir+str(i)+'_train.csv',train_predict,delimiter=',')
-                np.savetxt(save_dir+str(i)+'_val.csv',val_predict[-val_size:],delimiter=',')
-                np.savetxt(save_dir+str(i)+'_test.csv',test_predict[-test_size:],delimiter=',')
-                np.savetxt(save_dir+str(i)+'_future.csv',future_predict,delimiter=',')       
+                # save_dir = 'E:/Research/Work/magnetic_multipole/predict_SC24/model_output/' 
+                # np.savetxt(save_dir+str(i)+'_imf.csv',IMFs[i],delimiter=',')
+                # np.savetxt(save_dir+str(i)+'_train.csv',train_predict,delimiter=',')
+                # np.savetxt(save_dir+str(i)+'_val.csv',val_predict[-val_size:],delimiter=',')
+                # np.savetxt(save_dir+str(i)+'_test.csv',test_predict[-test_size:],delimiter=',')
+                # np.savetxt(save_dir+str(i)+'_future.csv',future_predict,delimiter=',')
+                plt.close()
 
     data_model = np.sum(IMFs_model, axis=0)
 
@@ -336,23 +341,26 @@ for lm in range(1,2):
     plt.hlines(0,xmin+cr_base,xmax+cr_base,color='pink',linestyles='dashed')
     # plt.plot(data_predict,label='predict',color='r')
     plt.plot(np.array(range(0,len(data_model)))[max(look_back_lst):]+cr_base,data_model[max(look_back_lst):],label='model',color='r')
-    plt.plot(np.array(range(0,len(data)))+cr_base,data,label='data',color='k')
+    plt.plot(np.array(range(0,len(data_raw)))+cr_base,data_raw,label='data',color='k')
     # plt.plot(train_t+look_back,data_train,label='train',color='b')
     # plt.plot(val_t[-val_size:]+look_back,data_val[-val_size:],label='val',color='m')
     # plt.plot(test_t[-test_size:]+look_back,data_test[-test_size:],label='test',color='g')
     plt.legend()
     # plt.title('g_{}^{}'.format(int(l_cor), int(m_cor)))
+
+    # 保存预测序列
+    if save_or_not == 1:
+        save_dir = 'E:/Research/Work/magnetic_multipole/predict_SC24/model_output/'        
+        save_file = 'No_' + str(lm) + '.csv'
+        np.savetxt(save_dir+save_file, data_model[max(look_back_lst):],delimiter=',')
+        
+        save_file = 'g_' + str(int(l_cor)) + '_' + str(int(m_cor)) + '.csv'
+        np.savetxt(save_dir+save_file, data_model[-future_step:],delimiter=',')
+        
+        save_png = 'g_' + str(int(l_cor)) + '_' + str(int(m_cor)) + '.png'
+        plt.savefig(save_dir+save_png)
             
     # plt.show()
     plt.close()
-
-    # 保存预测序列
-    # if save_or_not == 1:
-    #     save_dir = 'E:/Research/Work/magnetic_multipole/predict/model_output/'        
-        # save_file = 'No_' + str(lm) + '.csv'
-        # np.savetxt(save_dir+save_file, data_model[max(look_back_lst):],delimiter=',')
-        
-        # save_file = 'g_' + str(int(l_cor)) + '_' + str(int(m_cor)) + '.csv'
-        # np.savetxt(save_dir+save_file, data_model[-future_step:],delimiter=',')
 
 db = 1

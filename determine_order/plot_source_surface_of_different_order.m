@@ -24,19 +24,16 @@ Br_WSO_9 = Br_WSO_9.data;
 %% figures
 figure(1);
 p1 = pcolor(Br_WSO_5);
-colormap(red_white_blue); colorbar
 set(p1, 'LineStyle', 'none')
 plot_porperties(Br_WSO_5, red_white_blue)
 
 figure(2);
 p2 = pcolor(Br_WSO_9);
-colormap(red_white_blue); colorbar
 set(p2, 'LineStyle', 'none')
 plot_porperties(Br_WSO_9, red_white_blue)
 
 figure(3);
 p3 = pcolor(Br_gong);
-colormap(red_white_blue); colorbar
 set(p3, 'LineStyle', 'none')
 plot_porperties(Br_gong, red_white_blue)
 %% calculate correlation coefficient
@@ -50,7 +47,6 @@ cc_59 = cc_59(1,2);
 function plot_porperties(Br, red_white_blue)
     LineWidth = 2;
     FontSize = 15;
-    shading interp
     cb = colorbar;
     cb.Title.String = '[G]';
     colormap(red_white_blue);

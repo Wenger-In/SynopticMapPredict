@@ -8,7 +8,7 @@ file_name = 'gather_harmonic_coefficient.dat';
 data_dir = [store_dir,file_name];
 data = load(data_dir);
 
-pred_dir = 'E:\Research\Work\magnetic_multipole\predict\model_output\';
+pred_dir = 'E:\Research\Work\magnetic_multipole\predict_SC25\model_output\';
 pred = importdata([pred_dir,'No_1.csv']);
 future_step = 150;
 cr_pred_lst = cr_end_WSO + future_step - length(pred) + 1 : cr_end_WSO + future_step;
@@ -18,8 +18,8 @@ hc_sub = data(3:end,2);
 lb_lst = [25, 97, 150, 120];
 
 % plot figure
-LineWidth = 1.5;
-FontSize = 14;
+LineWidth = 2;
+FontSize = 25;
 subplot_hc(cr_obs_lst,hc_sub,4,0.15,0.02,LineWidth,FontSize,'g_1^0','k');
 plot(cr_pred_lst,pred,'r','LineWidth',LineWidth)
 legend('observation','model output','Location','eastoutside')
@@ -50,7 +50,7 @@ end
 subplot_xtick()
 
 figure()
-subplot_hc(cr_obs_lst,hc_sub,4,0.15,0.02,LineWidth,FontSize,'g_1^0','k');
+subplot_hc(cr_obs_lst,hc_sub,0,0.8,0.02,LineWidth,FontSize,'g_1^0','k');
 plot(cr_pred_lst,pred,'r','LineWidth',LineWidth)
 yline(0,'r','LineWidth',LineWidth,'Alpha',0.2)
 legend('observation','model output','','Location','eastoutside')

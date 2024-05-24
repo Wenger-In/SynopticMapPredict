@@ -1,6 +1,6 @@
 clear; close all;
-path = 'E:\Research\Work\magnetic_multipole\predict\comparison\';
-cr = 2261;
+path = 'E:\Research\Work\magnetic_multipole\predict_SC25\comparison\';
+cr = 2259;
 %% colorbar red-white-blue
 color_red   = [1,0,0];
 color_white = [1,1,1];

@@ -76,4 +76,4 @@ for cr in range(2239,2240):
     save_file = 'E:/Research/Program/SynopticMapPrediction/determine_order/' + str(cr) + '_WSO_9.fits'
     # save_file = path + 'neaten/' + 'cr' + str(cr) + '_neaten.fits'
     # save_file = path + 'neaten/' + neaten_fits[0].header['FILELIST'] + '.fits'
-    neaten_fits.writeto(save_file,overwrite=True)
+    # neaten_fits.writeto(save_file,overwrite=True)

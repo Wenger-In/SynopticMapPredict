@@ -1,6 +1,6 @@
 clear; close all;
 cr = 2261;
-pred_or_pers = 1; % 0-predict model; 1-persistent model
+pred_or_pers = 0; % 0-predict model; 1-persistent model
 %% import data
 obs_dir = 'E:\Research\Work\magnetic_multipole\harmonics_map\WSO\';
 obs_file = [obs_dir,'cr',num2str(cr),'_obs.mat'];
@@ -8,7 +8,7 @@ obs_data = load(obs_file);
 magneto_obs = obs_data.magneto;
 %% comparison
 if pred_or_pers == 0
-    pred_dir = 'E:\Research\Work\magnetic_multipole\predict\';
+    pred_dir = 'E:\Research\Work\magnetic_multipole\predict_SC25\';
     pred_file = [pred_dir,'cr',num2str(cr),'_pred.mat'];
     pred_data = load(pred_file);
     magneto_pred = pred_data.magneto;
@@ -68,8 +68,8 @@ cb.Label.String = 'count';
 axis equal
 xlim([-4,4])
 ylim([-4,4])
-xlabel('Observation [G]')
-ylabel('Prediction [G]')
+xlabel('Observation (G)')
+ylabel('Prediction (G)')
 set(gca,'LineWidth',2,'FontSize',15,'CLim',[0,50],'TickDir','out')
 
 sgtitle(['CR',num2str(cr),',k=',num2str(p(1)),',b=',num2str(p(2)),',CC=',num2str(cc(1,2))],'FontSize',30);
