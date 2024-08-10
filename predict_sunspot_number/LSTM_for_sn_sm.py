@@ -57,7 +57,7 @@ scaler = MinMaxScaler(feature_range=(0, 1))
 data = scaler.fit_transform(data)
 
 # 定义look_back
-look_back = 3
+look_back = 356
 
 # 生成训练集和测试集
 def create_dataset(dataset, look_back):

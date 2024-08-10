@@ -1,6 +1,6 @@
 clear; close all;
 % select order
-l = 2;
+l = 1;
 %% Component: colormap stand for Solar Cycle
 cr_beg_WSO = 1642; cr_end_WSO = 2258;
 cr_lst = cr_beg_WSO : cr_end_WSO;
@@ -52,8 +52,8 @@ hc_sub = hc_mat(:,col_beg:col_end);
 h_sub_lst = [0.2,0.15,0.12,0.09,0.07,0.061,0.055,0.048,0.042];
 h_space_lst = [0.05,0.02,0.01,0.01,0.01,0.008,0.005,0.005,0.005];
 % y_down_hc_lst = [-300,-350,-400,-800,-1000,-1200,-1200,-1500,-1500];
-y_down_hc_lst = [-350,-350,-350,-650,-800,-800,-800,-1000,-850];
-y_down_ps_lst = [-10,-12,-16,-20,-24,-30,-36,-40,-50];
+y_down_hc_lst = [-360,-350,-400,-850,-900,-1000,-1000,-1300,-1000];
+y_down_ps_lst = [-12,-15,-18,-23,-27,-34,-40,-45,-58];
 h_sub = h_sub_lst(l);
 h_space = h_space_lst(l);
 y_down_hc = y_down_hc_lst(l);
@@ -63,8 +63,8 @@ y_down_ps = y_down_ps_lst(l);
 
 %% PART 1: Time series
 % plot figure: time series of harmonic coefficient (normalized)
-LineWidth = 2;
-FontSize = 14;
+LineWidth = 0.3;
+FontSize = 24;%14
 sz = 30;
 
 % % style 1: all in one figure
@@ -82,12 +82,12 @@ for i_m = 1 : m_num
         figure();
     end
     if i_fig == 0 % bottom panel, add the xtick
-        subplot_hc(cr_lst,hc_sub(:,i_m),0,h_sub_lst(2),h_space_lst(2),LineWidth,FontSize,sz,colormap_sc,['g_{',num2str(l),'}^{',num2str(m_sub(i_m)),'}']);
+        subplot_hc(cr_lst,hc_sub(:,i_m),0,h_sub_lst(2),h_space_lst(2),LineWidth,FontSize,sz,colormap_sc,['{\itg}_{',num2str(l),'}^{',num2str(m_sub(i_m)),'}']);
         if i_m == m_num
             subplot_xtick(y_down_hc_lst(l),FontSize)
         end
     else
-        subplot_hc(cr_lst,hc_sub(:,i_m),fig_num-i_fig,h_sub_lst(2),h_space_lst(2),LineWidth,FontSize,sz,colormap_sc,['g_{',num2str(l),'}^{',num2str(m_sub(i_m)),'}']);
+        subplot_hc(cr_lst,hc_sub(:,i_m),fig_num-i_fig,h_sub_lst(2),h_space_lst(2),LineWidth,FontSize,sz,colormap_sc,['{\itg}_{',num2str(l),'}^{',num2str(m_sub(i_m)),'}']);
         if i_m == m_num
             subplot_xtick(y_down_hc_lst(l),FontSize)
         end
@@ -143,8 +143,8 @@ period_cr = 1./freq;
 period_year = period_cr ./ cr2year;
 
 % plot figure: power spectrum of harmonic coefficient
-LineWidth = 2;
-FontSize = 14;
+LineWidth = 0.3;
+FontSize = 24;%14
 
 % % style 1: all in one figure
 % figure()
@@ -165,13 +165,13 @@ for i_m = 1 : m_num
         figure();
     end
     if i_fig == 0 % bottom panel, add the xtick
-        subplot_ps(cr_lst,period_year,wave_mat(:,:,i_m),0,h_sub_lst(2),h_space_lst(2),LineWidth,FontSize,['g_{',num2str(l),'}^{',num2str(m_sub(i_m)),'}']);
+        subplot_ps(cr_lst,period_year,wave_mat(:,:,i_m),0,h_sub_lst(2),h_space_lst(2),LineWidth,FontSize,['{\itg}_{',num2str(l),'}^{',num2str(m_sub(i_m)),'}']);
         if i_m == m_num
             subplot_xtick(y_down_ps_lst(2),FontSize)
         end
         subplot_ps_mean(period_year,wave_mat(:,:,i_m),0,h_sub_lst(2),h_space_lst(2),LineWidth,FontSize);
     else
-        subplot_ps(cr_lst,period_year,wave_mat(:,:,i_m),fig_num-i_fig,h_sub_lst(2),h_space_lst(2),LineWidth,FontSize,['g_{',num2str(l),'}^{',num2str(m_sub(i_m)),'}']);
+        subplot_ps(cr_lst,period_year,wave_mat(:,:,i_m),fig_num-i_fig,h_sub_lst(2),h_space_lst(2),LineWidth,FontSize,['{\itg}_{',num2str(l),'}^{',num2str(m_sub(i_m)),'}']);
         if i_m == m_num
             subplot_xtick(y_down_ps_lst(2),FontSize)
         end
@@ -188,25 +188,25 @@ sn_data = load(sn_dir);
 sn_cr_lst = sn_data(:,1);
 sn = sn_data(:,3);
 
-% plot figure: sunspot number series
-figure();
-LineWidth = 2;
-FontSize = 14;
-sz = 100;
-cross_0_lst = [1687,1823,1954,2128];
-cross_0_num = length(cross_0_lst);
-
-plot(sn_cr_lst,sn,'k','LineWidth',LineWidth);
-hold on
-scatter(sn_cr_lst,sn,sz,sn_cr_lst,'filled');
-colormap(colormap_sc);
-hold on
-for i_cross = 1 : cross_0_num
-    xline(cross_0_lst(i_cross),'k','LineWidth',LineWidth);
-end
-ylabel('Sunspot Number');
-set(gca,'LineWidth',LineWidth,'FontSize',FontSize);
-subplot_xtick(-15,FontSize)
+% % plot figure: sunspot number series
+% figure();
+% LineWidth = 2;
+% FontSize = 14;
+% sz = 100;
+% cross_0_lst = [1687,1823,1954,2128];
+% cross_0_num = length(cross_0_lst);
+% 
+% plot(sn_cr_lst,sn,'k','LineWidth',LineWidth);
+% hold on
+% scatter(sn_cr_lst,sn,sz,sn_cr_lst,'filled');
+% colormap(colormap_sc);
+% hold on
+% for i_cross = 1 : cross_0_num
+%     xline(cross_0_lst(i_cross),'k','LineWidth',LineWidth);
+% end
+% ylabel('Sunspot Number');
+% set(gca,'LineWidth',LineWidth,'FontSize',FontSize);
+% subplot_xtick(-15,FontSize)
 
 % % plot figure: Lissajours figure
 % figure();
@@ -228,26 +228,26 @@ subplot_xtick(-15,FontSize)
 %     set(gca,'LineWidth',LineWidth,'FontSize',FontSize);
 % end
 
-% plot figure: smoothed Lissajour figure
-figure();
-LineWidth = 2;
-FontSize = 14;
-sz = 30;
-smooth_win = 13/12*365.2422/27.2753; % from Carrington Rotation Period to Year
-
-for i_m = 1 : 1%m_num
-%     subplot(ceil(sqrt(m_num)),ceil(sqrt(m_num)),i_m);
-    scatter(sn,smooth(hc_sub(:,i_m),smooth_win),sz,sn_cr_lst,'filled');
-    grid on
-    axis square
-    colormap(colormap_sc);
-    colorbar off;
-%     hold on
-%     plot(hc_sub(:,i_m),sn,'LineWidth',LineWidth);
-    xlabel('Sunspot Number');
-    ylabel(['g_{',num2str(l),'}^{',num2str(m_sub(i_m)),'}']);
-    set(gca,'LineWidth',LineWidth,'FontSize',FontSize);
-end
+% % plot figure: smoothed Lissajour figure
+% figure();
+% LineWidth = 2;
+% FontSize = 14;
+% sz = 30;
+% smooth_win = 13/12*365.2422/27.2753; % from Carrington Rotation Period to Year
+% 
+% for i_m = 1 : 1%m_num
+% %     subplot(ceil(sqrt(m_num)),ceil(sqrt(m_num)),i_m);
+%     scatter(sn,smooth(hc_sub(:,i_m),smooth_win),sz,sn_cr_lst,'filled');
+%     grid on
+%     axis square
+%     colormap(colormap_sc);
+%     colorbar off;
+% %     hold on
+% %     plot(hc_sub(:,i_m),sn,'LineWidth',LineWidth);
+%     xlabel('Sunspot Number');
+%     ylabel(['g_{',num2str(l),'}^{',num2str(m_sub(i_m)),'}']);
+%     set(gca,'LineWidth',LineWidth,'FontSize',FontSize);
+% end
 %% PART 3
 
 
@@ -265,7 +265,7 @@ function [wave,f] = wavelet(x)
 end
 
 function subplot_hc(x,y,i_h,h_sub,h_space,LineWidth,FontSize,sz,colormap_sc,label)
-    w_base = 0.1;
+    w_base = 0.15;
     w_sub = 0.8;
     h_base = 0.1;
     cross_0_lst = [1687,1823,1954,2128];
@@ -274,17 +274,17 @@ function subplot_hc(x,y,i_h,h_sub,h_space,LineWidth,FontSize,sz,colormap_sc,labe
 %     sharp_num = length(sharp_lst);
 
     subplot('Position',[w_base,h_base+(h_sub+h_space)*i_h,w_sub,h_sub])
-    plot(x,y,'k','LineWidth',LineWidth);
-    hold on; grid on
-    scatter(x,y,sz,x,'filled');
-    colormap(colormap_sc);
-    hold on
     yline(0,'r','LineWidth',LineWidth,'Alpha',0.2)
     hold on
     for i_cross = 1 : cross_0_num
         xline(cross_0_lst(i_cross),'k','LineWidth',LineWidth);
     end
-%     hold on
+    hold on
+    plot(x,y,'k','LineWidth',LineWidth);
+    hold on; grid on
+    scatter(x,y,sz,x,'filled');
+    colormap(colormap_sc);
+    hold on
 %     for i_sharp = 1 : sharp_num
 %        sharp_beg = sharp_lst(i_sharp,1);
 %         sharp_end = sharp_lst(i_sharp,2);
@@ -292,11 +292,12 @@ function subplot_hc(x,y,i_h,h_sub,h_space,LineWidth,FontSize,sz,colormap_sc,labe
 %     end
     ylabel(label)
     set(gca,'LineWidth',LineWidth,'FontSize',FontSize,'XTickLabel',[],'XMinorTick','on')
+    box on
 end
 
 function subplot_ps(x,y,c,i_h,h_sub,h_space,LineWidth,FontSize,label)
-    w_base = 0.1;
-    w_sub = 0.65;
+    w_base = 0.12;
+    w_sub = 0.72;
     h_base = 0.1;
     cross_0_lst = [1687,1823,1954,2128];
     cross_0_num = length(cross_0_lst);
@@ -312,17 +313,19 @@ function subplot_ps(x,y,c,i_h,h_sub,h_space,LineWidth,FontSize,label)
     h = pcolor(x,y,abs(c_smooth));
     set(h,'LineStyle','none')
     shading interp
-    for i_cross = 1 : cross_0_num
-        xline(cross_0_lst(i_cross),'k','LineWidth',LineWidth);
-    end
-    ylabel({label,'T [y]'})
-    set(gca,'YScale','log','LineWidth',LineWidth,'FontSize',FontSize,'TickDir','out','XTickLabel',[],'XMinorTick','on','YMinorTick','on');
+%     for i_cross = 1 : cross_0_num
+%         xline(cross_0_lst(i_cross),'k','LineWidth',LineWidth);
+%     end
+    ylabel({label,'{\itT} (y)'})
+    set(gca,'YScale','linear','LineWidth',LineWidth,'FontSize',FontSize,'TickDir','out','XTickLabel',[],'XMinorTick','on','YMinorTick','on');
     colormap jet; colorbar off
+    hold on
+    box on
 end
 
 function subplot_ps_mean(y,c,i_h,h_sub,h_space,LineWidth,FontSize)
-    w_base = 0.75;
-    w_sub = 0.15;
+    w_base = 0.84;
+    w_sub = 0.12;
     h_base = 0.1;
 
     subplot('Position',[w_base,h_base+(h_sub+h_space)*i_h,w_sub,h_sub])
@@ -344,11 +347,17 @@ function subplot_ps_mean(y,c,i_h,h_sub,h_space,LineWidth,FontSize)
 end
 
 function subplot_xtick(y_text,FontSize)
+%     set(gca,'XTick',[1600,1650,1700,1750,1800,1850,1900,1950,2000,2050,2100,2150,2200,2250], ...
+%         'XTickLabel',{'CR','1650','1700','1750','1800','1850','1900','1950','2000','2050','2100','2150','2200','2250'}); % CR ticks
+%     text([1600,1650,1700,1750,1800,1850,1900,1950,2000,2050,2100,2150,2200,2250], ...
+%        zeros(1,14) + y_text, ...
+%         {'yyyy/mm','1977/01','1980/10','1984/07','1988/03','1991/12','1995/09','1999/06','2003/03','2006/11','2010/08','2014/05','2018/02','2021/11'}, ...
+%         'HorizontalAlignment','center','FontSize',FontSize); % date ticks
     set(gca,'XTick',[1600,1650,1700,1750,1800,1850,1900,1950,2000,2050,2100,2150,2200,2250], ...
-        'XTickLabel',{'CR','1650','1700','1750','1800','1850','1900','1950','2000','2050','2100','2150','2200','2250'}); % CR ticks
-    text([1600,1650,1700,1750,1800,1850,1900,1950,2000,2050,2100,2150,2200,2250], ...
-       zeros(1,14) + y_text, ...
-        {'yyyy/mm','1977/01','1980/10','1984/07','1988/03','1991/12','1995/09','1999/06','2003/03','2006/11','2010/08','2014/05','2018/02','2021/11'}, ...
+        'XTickLabel',{'CR','1650','','1750','','1850','','1950','','2050','','2150','','2250'}); % CR ticks
+    text([1580,1650,1750,1850,1950,2050,2150,2250], ...
+       zeros(1,8) + y_text, ...
+        {'yyyy/mm','1977/01','1984/07','1991/12','1999/06','2006/11','2014/05','2021/11'}, ...
         'HorizontalAlignment','center','FontSize',FontSize); % date ticks
 end
 

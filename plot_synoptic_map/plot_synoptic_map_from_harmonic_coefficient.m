@@ -1,8 +1,8 @@
 clear; close all;
 save_or_not = 0;
 mode = 1; % 0-GONG, 1-WSO, 2-predict
-cr_beg= 2261;
-cr_end= 2261;
+cr_beg= 1700;
+cr_end= 1700;
 %% colorbar red-white-blue
 color_red   = [1,0,0];
 color_white = [1,1,1];
@@ -109,27 +109,30 @@ for cr = cr_beg : cr_end
         saveas(gca,[save_dir,save_name,'.png']); % for GONG and WSO
 %         save(['E:\Research\Work\magnetic_multipole\predict\cr',num2str(cr),'_pred.mat'],'magneto')
     end
+    %% plot magnetogram in sphere
+    figure('color','k');
+    
+    [ttheta,pphi] = meshgrid(theta,phi);
+    sphx = sin(ttheta).*cos(pphi);
+    sphy = sin(ttheta).*sin(pphi);
+    sphz = cos(ttheta);
+    surf(sphx,sphy,sphz,magneto.');
+    shading interp
+    ax = gca;
+    ax.Color = 'k';
+    colorbar off
+    colormap(red_white_blue);
+    axis equal
+    set(gca,'Clim',[-clim,clim],'GridColor','w','XminorTick','on','YminorTick','on','LineWidth',LineWidth,'FontSize',FontSize);
+    grid off
+    axis off
+    box off
+    view([-1,0,0])
+    
+    save_name = ['l=',num2str(l_lst),',m=',num2str(m_lst)];
+    % title(save_name,'FontSize',FontSize);
+%     title(['CR ',num2str(cr)]);
+    if save_or_not == 1
+        saveas(gca,[save_dir,'sphere\',save_name,'_sphere.png']);
+    end
 end
-%% plot magnetogram in sphere
-% figure('color','k');
-% 
-% [ttheta,pphi] = meshgrid(theta,phi);
-% sphx = sin(ttheta).*cos(pphi);
-% sphy = sin(ttheta).*sin(pphi);
-% sphz = cos(ttheta);
-% surf(sphx,sphy,sphz,magneto.');
-% shading interp
-% grid on
-% ax = gca;
-% ax.Color = 'k';
-% colorbar;
-% colormap(red_white_blue);
-% axis equal
-% set(gca,'Clim',[-clim,clim],'GridColor','w','XminorTick','on','YminorTick','on','LineWidth',LineWidth,'FontSize',FontSize);
-% 
-% save_name = ['l=',num2str(l_lst),',m=',num2str(m_lst)];
-% % title(save_name,'FontSize',FontSize);
-% title(['CR ',num2str(cr)]);
-% if save_or_not == 1
-%     saveas(gca,[save_dir,'sphere\',save_name,'_sphere.png']);
-% end
